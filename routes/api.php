@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\ApiAuthController;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +28,12 @@ Route::get('/hello', function () {
 });
 
 Route::apiResource('/mahasiswa',MahasiswaController::class);
+
+Route::post('/login',[ApiAuthController::class,'login']);
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::apiResource('/mahasiswa',MahasiswaController::class);
+    Route::get('/logout',[ApiAuthController::class,'logout']);
+});
+
+Route::post('/register',[ApiAuthController::class,'register']);
